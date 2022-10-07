@@ -4,13 +4,14 @@ battle = 0
 energy = initial_energy
 while command != "End of battle":
     distance = int(command)
-    if battle % 3 == 0:
-        energy += battle
+
     if energy >= distance:
         energy -= distance
     else:
         break
     battle += 1
+    if battle % 3 == 0:
+        energy += battle
 
     command = input()
 
