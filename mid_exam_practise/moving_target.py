@@ -1,45 +1,53 @@
-def remove(index, value):
-    index = int(index)
-    value = int(value)
+def command_remove(index, power, targets):
     if 0 <= index < len(targets):
-        targets[index] -= value
+        targets[index] -= power
         if targets[index] <= 0:
             targets.pop(index)
-    return index
+
+    return targets
 
 
-def command_add(add_list, index, value):
-    index = int(index)
-    value = int(value)
+def command_add(index, value, targets):
     if 0 <= index < len(targets):
-        add_list.insert(index, value)
+        targets.insert(index, value)
     else:
         print("Invalid placement!")
-    return add_list
 
-def command_strike(index, value):
-    index = int(index)
-    value = int(value)
-    if index < value or (value + index) >= len(targets):
-        print("Strike missed!")
+    return targets
+
+
+def command_strike(index, radius, targets):
+    validator = index - radius >= 0 and index + radius < len(targets)
+    if validator:
+        first_index = index - radius
+        last_index = index + radius
+        targets = [targets[i] for i in range(len(targets)) if i < first_index or i > last_index]
     else:
-        del targets[index - value:index + value + 1]
+        print("Strike missed!")
+
+    return targets
 
 
-targets = list(map(int, input().split()))
-command = input().split()
-new_list = []
-while command[0] != "End":
-    current_command = command[0]
-    current_index = command[1]
-    current_value = command[2]
-    if current_command == "Shoot":
-        action = remove(current_index, current_value)
-    elif current_command == "Add":
-        action = command_add(current_command, current_index, current_value)
-    elif current_command == "Strike":
-        action = command_strike(current_index, current_value)
+def action_func(targets):
+    command = input()
+    while command != "End":
+        current_command, index, value = command.split()
+        if current_command == "Shoot":
+            targets = command_remove(int(index), int(value), targets)
+        elif current_command == "Add":
+            targets = command_add(int(index), int(value), targets)
+        elif current_command == "Strike":
+            targets = command_strike(int(index), int(value), targets)
+        command = input()
 
-    command = input().split()
+    return targets
 
-print("|".join(map(str, targets)))
+sequence_of_targets = list(map(int, input().split()))
+result = action_func(sequence_of_targets)
+print("|".join(map(str, result)))
+
+
+
+
+
+
