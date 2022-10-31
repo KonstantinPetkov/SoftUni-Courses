@@ -14,5 +14,5 @@ for element in secret_message:
         letter = f"{letter[-1]}{letter[1:-1]}{letter[0]}"
     letters.append(letter)
 
-for num, word in zip(letters, digits):
-    print(f"{str(num)}{word})", end=" ")
+for num, word in zip(digits, letters):
+    print(f"{chr(num)}{word}", end=" ")
