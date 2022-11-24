@@ -1,5 +1,8 @@
-text = input()
-while text != "end":
-    reversed_word = text[::-1]
-    print(f"{text} = {reversed_word}")
+while True:
     text = input()
+
+    if text == "end":
+        break
+
+    print(f"{text} = {text[::-1]}")
+
