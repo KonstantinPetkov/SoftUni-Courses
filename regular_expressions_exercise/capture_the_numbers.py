@@ -1,0 +1,9 @@
+import re
+
+text = input()
+pattern = '\d+'
+while text:
+    matches = re.findall(pattern, text)
+    if matches:
+        print(' '.join(matches), end=" ")
+    text = input()
